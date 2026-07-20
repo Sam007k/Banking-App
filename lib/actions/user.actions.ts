@@ -37,16 +37,16 @@ export const signIn = async ({ email, password }: signInProps) => {
     const { account } = await createAdminClient();
     const session = await account.createEmailPasswordSession(email, password);
 
-    cookies().set("appwrite-session", session.secret, {
-      path: "/",
-      httpOnly: true,
-      sameSite: "strict",
-      secure: true,
-    });
+    // cookies().set("appwrite-session", session.secret, {
+    //   path: "/",
+    //   httpOnly: true,
+    //   sameSite: "strict",
+    //   secure: true,
+    // });
 
-    const user = await getUserInfo({ userId: session.userId }) 
+    // const user = await getUserInfo({ userId: session.userId }) 
 
-    return parseStringify(user);
+    return parseStringify(session);
   } catch (error) {
     console.error('Error', error);
   }
@@ -116,5 +116,15 @@ export async function getLoggedInUser() {
   } catch (error) {
     console.log(error)
     return null;
+  }
+}
+
+export const logOutAccount = async() => {
+  try {
+    const {account} = await createSessionClient()
+    cookies().delete('appwrite-session')
+    await account.deleteSession('current')
+  } catch (error) {
+    return null
   }
 }
