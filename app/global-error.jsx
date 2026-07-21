@@ -1,5 +1,6 @@
 "use client";
 
+
 import * as Sentry from "@sentry/nextjs";
 import Error from "next/error";
 import { useEffect } from "react";
@@ -12,7 +13,7 @@ export default function GlobalError({ error }) {
   return (
     <html>
       <body>
-        <Error />
+        {/* Your Error component here... */}
       </body>
     </html>
   );

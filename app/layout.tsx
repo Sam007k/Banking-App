@@ -3,6 +3,8 @@ export const dynamic = 'force-dynamic'
 import type { Metadata } from "next";
 import { Inter, IBM_Plex_Serif } from "next/font/google";
 import './globals.css'
+import * as Sentry from '@sentry/nextjs';
+
 
 const inter = Inter({ subsets: ["latin"], variable: '--font-inter' });
 const ibmPlexSerif = IBM_Plex_Serif({
@@ -11,13 +13,13 @@ const ibmPlexSerif = IBM_Plex_Serif({
   variable: '--font-ibm-plex-serif'
 })
 
-export const metadata: Metadata = {
-  title: "Horizon",
-  description: "Horizon is a modern banking platform for everyone.",
-  icons: {
-    icon: '/icons/logo.svg'
-  }
-};
+// export const metadata: Metadata = {
+//   title: "Horizon",
+//   description: "Horizon is a modern banking platform for everyone.",
+//   icons: {
+//     icon: '/icons/logo.svg'
+//   }
+// };
 
 export default function RootLayout({
   children,
@@ -30,3 +32,13 @@ export default function RootLayout({
     </html>
   );
 }
+
+ // Add or edit your "generateMetadata" to include the Sentry trace data:
+ export function generateMetadata(): Metadata {
+   return {
+     // ... your existing metadata
+     other: {
+       ...Sentry.getTraceData()
+     }
+   };
+ }
